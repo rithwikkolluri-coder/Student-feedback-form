@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KL University Hyderabad — Student Review Form</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --kl-red: #c0111f;
+      --kl-red-dark: #8f0d17;
+      --kl-red-light: #fdf0f1;
+      --kl-red-mid: #f5c0c3;
+      --kl-gold: #f0a500;
+      --kl-gold-light: #fef7e6;
+      --kl-teal: #006d77;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555;
+      --text-muted: #999;
+      --bg-page: #f4f5f8;
+      --bg-card: #ffffff;
+      --border: #e5e7eb;
+      --radius: 14px;
+      --radius-sm: 9px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-page);
+      min-height: 100vh;
+      color: var(--text-primary);
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: #8f0d17;
+      padding: 6px 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .topbar span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.75);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .topbar .naac {
+      background: var(--kl-gold);
+      color: #7a4a00;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── HEADER ── */
+    .klu-header {
+      background: var(--kl-red);
+      position: relative;
+      overflow: hidden;
+    }
+    .klu-header::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+    .klu-header::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: 25%;
+      width: 350px; height: 350px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .header-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 1.25rem;
+    }
+    .logo-wrap {
+      width: 64px; height: 64px;
+      border-radius: 14px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.18);
+      padding: 6px;
+    }
+    .logo-kl {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--kl-red);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .logo-u {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--kl-gold);
+      letter-spacing: 0.12em;
+      margin-top: 1px;
+    }
+    .header-text h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 3px;
+    }
+    .header-text .sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .header-text .sub i { font-size: 14px; }
+    .header-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      border-left: 3px solid var(--kl-gold);
+      padding: 14px 16px;
+    }
+    .header-banner i { font-size: 18px; color: var(--kl-gold); margin-top: 1px; flex-shrink: 0; }
+    .header-banner div { font-size: 13.5px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+    .header-banner strong { color: #fff; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    .progress-inner {
+      display: flex;
+      gap: 0;
+    }
+    .prog-step {
+      flex: 1;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .prog-step.active { color: var(--kl-red); border-bottom-color: var(--kl-red); }
+    .prog-step i { font-size: 14px; }
+
+    /* ── BODY ── */
+    .page-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 3rem;
+    }
+
+    /* ── TAB BAR ── */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: 9px 20px;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      font-size: 14px;
+      font-weight: 400;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: inherit;
+    }
+    .tab.active {
+      background: var(--kl-red);
+      color: #fff;
+      border-color: var(--kl-red);
+      font-weight: 600;
+    }
+    .tab:hover:not(.active) {
+      border-color: var(--kl-red-mid);
+      color: var(--kl-red);
+      background: var(--kl-red-light);
+    }
+
+    /* ── CARDS ── */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .section-card.dashed { border-style: dashed; box-shadow: none; }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .card-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: var(--kl-red-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-icon i { font-size: 18px; color: var(--kl-red); }
+    .card-head-text h2 { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 1px; }
+    .card-head-text p { font-size: 12px; color: var(--text-muted); }
+
+    .sub-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sub-title i { font-size: 13px; color: var(--kl-red); }
+
+    /* ── FIELDS ── */
+    .field { margin-bottom: 1.25rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .field label .opt { font-weight: 400; color: var(--text-muted); font-size: 13px; }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 10px 13px;
+      font-size: 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #fafafa;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      font-family: inherit;
+    }
+    input[type="text"]:focus, select:focus, textarea:focus {
+      border-color: var(--kl-red);
+      box-shadow: 0 0 0 3px rgba(192,17,31,0.1);
+      background: #fff;
+    }
+    textarea { min-height: 80px; resize: vertical; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media (max-width: 520px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+    .divider { height: 1px; background: #f0f0f0; margin: 1.25rem 0; }
+
+    /* ── STAR RATINGS ── */
+    .rating-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 500px) { .rating-grid { grid-template-columns: 1fr; } }
+
+    .mini-card {
+      background: #f8f9fc;
+      border: 1px solid #eeeff3;
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+    }
+    .mini-card label { font-size: 13px; font-weight: 500; color: #333; display: block; margin-bottom: 8px; }
+    .star-row { display: flex; align-items: center; gap: 3px; }
+    .star {
+      font-size: 21px;
+      cursor: pointer;
+      color: #ddd;
+      transition: color 0.1s;
+      user-select: none;
+      line-height: 1;
+    }
+    .star.lit { color: var(--kl-gold); }
+    .star-label { font-size: 11px; color: var(--text-muted); margin-left: 5px; min-width: 58px; }
+
+    /* ── TAGS ── */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag {
+      padding: 6px 13px;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      background: #fff;
+      transition: all 0.12s;
+      font-family: inherit;
+    }
+    .tag.selected {
+      background: var(--kl-red-light);
+      color: var(--kl-red-dark);
+      border-color: var(--kl-red);
+      font-weight: 600;
+    }
+    .tag:hover:not(.selected) { background: #f5f5f5; }
+
+    /* ── SUBMIT ── */
+    .submit-row { display: flex; align-items: center; gap: 10px; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn-submit {
+      padding: 12px 32px;
+      border-radius: var(--radius-sm);
+      background: var(--kl-red);
+      color: #fff;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.15s, transform 0.1s;
+      font-family: inherit;
+      letter-spacing: 0.02em;
+    }
+    .btn-submit:hover { opacity: 0.88; }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-reset {
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border);
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.12s;
+    }
+    .btn-reset:hover { background: #f0f0f0; }
+
+    /* ── SUCCESS ── */
+    .success-box {
+      display: none;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .success-box.show { display: block; }
+    .success-icon {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: #eaf3de;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+    .success-icon i { font-size: 32px; color: #3b6d11; }
+    .success-box h3 { font-size: 21px; font-weight: 800; color: #1a1a1a; margin-bottom: 8px; }
+    .success-box p { font-size: 14px; color: var(--text-secondary); margin-bottom: 4px; }
+    .success-box .klu-tag {
+      display: inline-block;
+      margin: 12px 0 1.5rem;
+      background: var(--kl-red-light);
+      color: var(--kl-red-dark);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 99px;
+    }
+    .btn-new {
+      padding: 11px 26px;
+      border-radius: var(--radius-sm);
+      background: var(--kl-red);
+      color: #fff;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-new:hover { opacity: 0.88; }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      text-align: center;
+      font-size: 12px;
+      color: #bbb;
+      margin-top: 2rem;
+      line-height: 1.8;
+    }
+    .page-footer strong { color: var(--kl-red); }
+    .page-footer a { color: #aaa; text-decoration: none; }
+
+    /* ── LOGIN PAGE ── */
+    #loginPage {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: var(--bg-page); padding: 1.5rem;
+    }
+    .login-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      padding: 2.5rem 2rem; width: 100%; max-width: 420px;
+    }
+    .login-logo { display: flex; align-items: center; gap: 14px; margin-bottom: 1.75rem; }
+    .login-logo-box {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: var(--kl-red); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .login-logo-box .logo-kl { font-size: 18px; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -1px; }
+    .login-logo-box .logo-u  { font-size: 8px; font-weight: 700; color: rgba(255,255,255,0.75); letter-spacing: 0.1em; margin-top: 1px; }
+    .login-title h2 { font-size: 17px; font-weight: 800; color: var(--text-primary); margin-bottom: 2px; }
+    .login-title p  { font-size: 12px; color: var(--text-muted); }
+    .login-divider { height: 1px; background: #f0f0f0; margin: 0 0 1.5rem; }
+    .login-field { margin-bottom: 1.1rem; }
+    .login-field label { display: block; font-size: 13.5px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
+    .login-input-wrap { position: relative; }
+    .login-input-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; color: var(--text-muted); pointer-events: none; }
+    .login-input-wrap input {
+      width: 100%; padding: 10px 13px 10px 36px; font-size: 14px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      background: #fafafa; color: var(--text-primary); outline: none;
+      font-family: inherit; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .login-input-wrap input:focus { border-color: var(--kl-red); box-shadow: 0 0 0 3px rgba(192,17,31,0.1); background: #fff; }
+    .login-input-wrap input.error { border-color: #e53e3e; box-shadow: 0 0 0 3px rgba(229,62,62,0.1); }
+    .login-hint { font-size: 11.5px; color: var(--text-muted); margin-top: 5px; }
+    .login-error { font-size: 12.5px; color: #c0392b; background: #fff5f5; border: 1px solid #fed7d7; border-radius: 8px; padding: 9px 12px; margin-bottom: 1rem; display: none; align-items: center; gap: 7px; }
+    .login-error.show { display: flex; }
+    .login-error i { font-size: 15px; flex-shrink: 0; }
+    .btn-login { width: 100%; padding: 11px; background: var(--kl-red); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; letter-spacing: 0.02em; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.15s, transform 0.1s; margin-top: 0.25rem; }
+    .btn-login:hover { opacity: 0.88; }
+    .btn-login:active { transform: scale(0.98); }
+    .login-footer { font-size: 11.5px; color: var(--text-muted); text-align: center; margin-top: 1.25rem; }
+    .user-chip { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.85); }
+    .user-chip i { font-size: 14px; }
+    .btn-logout { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 5px; cursor: pointer; font-family: inherit; margin-left: 6px; transition: background 0.15s; }
+    .btn-logout:hover { background: rgba(255,255,255,0.25); }
+    #mainApp { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN PAGE ══════════ -->
+<div id="loginPage">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-box">
+        <div class="logo-kl">KL</div>
+        <div class="logo-u">UNIVERSITY</div>
+      </div>
+      <div class="login-title">
+        <h2>KL University Hyderabad</h2>
+        <p>Student Services Feedback Portal</p>
+      </div>
+    </div>
+    <div class="login-divider"></div>
+
+    <div class="login-error" id="loginError">
+      <i class="ti ti-alert-circle"></i>
+      <span id="loginErrorMsg">Invalid email. Please use your @klh.edu.in address.</span>
+    </div>
+
+    <div class="login-field">
+      <label>College Email Address</label>
+      <div class="login-input-wrap">
+        <i class="ti ti-mail"></i>
+        <input type="email" id="loginEmail" placeholder="yourname@klh.edu.in"
+          oninput="clearLoginError()" onkeydown="if(event.key==='Enter') doLogin()" />
+      </div>
+      <div class="login-hint">Must be your official <strong>@klh.edu.in</strong> email</div>
+    </div>
+
+    <div class="login-field">
+      <label>Password</label>
+      <div class="login-input-wrap">
+        <i class="ti ti-lock"></i>
+        <input type="password" id="loginPassword" placeholder="Enter your password"
+          oninput="clearLoginError()" onkeydown="if(event.key==='Enter') doLogin()" />
+      </div>
+    </div>
+
+    <button class="btn-login" onclick="doLogin()">
+      <i class="ti ti-login"></i> Sign in
+    </button>
+
+    <div class="login-footer">
+      Use your KLU Hyderabad student portal credentials.<br/>
+      Issues? Contact <strong>it.support@klh.edu.in</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MAIN APP ══════════ -->
+<div id="mainApp">
+<!-- TOP BAR -->
+<div class="topbar">
+  <span><i class="ti ti-map-pin"></i> Hyderabad Campus — Bachupally, Hyderabad, Telangana</span>
+  <span class="naac">NAAC A++</span>
+  <div class="user-chip">
+    <i class="ti ti-user-circle"></i>
+    <span id="topbarEmail"></span>
+    <button class="btn-logout" onclick="doLogout()">Sign out</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="klu-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="logo-wrap">
+        <div class="logo-kl">KL</div>
+        <div class="logo-u">UNIVERSITY</div>
+      </div>
+      <div class="header-text">
+        <h1>KL University Hyderabad</h1>
+        <div class="sub">
+          <i class="ti ti-building-community"></i>
+          Student Services Feedback Portal &nbsp;·&nbsp; Academic Year 2024–25
+        </div>
+      </div>
+    </div>
+    <div class="header-banner">
+      <i class="ti ti-clipboard-text"></i>
+      <div>
+        <strong>Campus Service Review Form</strong> — Share your experience with KLU Hyderabad's
+        bus transportation, canteen, and hostel facilities. Your feedback is reviewed weekly by the
+        <strong>Student Welfare Cell</strong> and helps us deliver a better campus life.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS STRIP -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="prog-step active" onclick="switchTab('bus')">
+      <i class="ti ti-bus"></i> Bus service
+    </div>
+    <div class="prog-step" onclick="switchTab('canteen')">
+      <i class="ti ti-tools-kitchen-2"></i> Canteen
+    </div>
+    <div class="prog-step" onclick="switchTab('hostel')">
+      <i class="ti ti-building"></i> Hostel
+    </div>
+    <div class="prog-step" onclick="switchTab('both')">
+      <i class="ti ti-list-check"></i> All services
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+  <form id="reviewForm" onsubmit="handleSubmit(event)">
+
+    <!-- TAB BAR (mobile-friendly) -->
+    <div class="tab-bar">
+      <button type="button" class="tab active" onclick="switchTab('bus')">
+        <i class="ti ti-bus"></i> Bus service
+      </button>
+      <button type="button" class="tab" onclick="switchTab('canteen')">
+        <i class="ti ti-tools-kitchen-2"></i> Canteen
+      </button>
+      <button type="button" class="tab" onclick="switchTab('hostel')">
+        <i class="ti ti-building"></i> Hostel
+      </button>
+      <button type="button" class="tab" onclick="switchTab('both')">
+        <i class="ti ti-list-check"></i> All services
+      </button>
+    </div>
+
+    <!-- ══════════ BUS SECTION ══════════ -->
+    <div id="section-bus">
+      <div class="section-card">
+        <div class="card-head">
+          <div class="card-icon"><i class="ti ti-bus"></i></div>
+          <div class="card-head-text">
+            <h2>KLU Hyderabad — Bus Service</h2>
+            <p>Rate the transportation facilities provided by the university</p>
+          </div>
+        </div>
+
+        <div class="two-col" style="margin-bottom:1.25rem">
+          <div class="field" style="margin-bottom:0">
+            <label>Route / bus number</label>
+            <input type="text" id="busRoute" placeholder="e.g. Route 7 — Mehdipatnam" />
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>Your boarding stop</label>
+            <select id="busStop">
+              <option value="">— select stop —</option>
+              <optgroup label="Hyderabad City">
+                <option>Mehdipatnam</option>
+                <option>Tolichowki</option>
+                <option>Attapur</option>
+                <option>Rajendranagar</option>
+                <option>Shamshabad</option>
+                <option>Aramghar</option>
+                <option>Banjara Hills</option>
+                <option>Jubilee Hills</option>
+                <option>Madhapur / HITEC City</option>
+                <option>Gachibowli</option>
+                <option>Kondapur</option>
+                <option>Kothaguda</option>
+              </optgroup>
+              <optgroup label="Surrounding Areas">
+                <option>Bachupally</option>
+                <option>Chevella</option>
+                <option>Shankarpally</option>
+                <option>Gandipet</option>
+                <option>Ibrahimpatnam</option>
+                <option>Shadnagar</option>
+              </optgroup>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="two-col" style="margin-bottom:1.25rem">
+          <div class="field" style="margin-bottom:0">
+            <label>Usual travel time</label>
+            <select id="busTime">
+              <option value="">— select —</option>
+              <option>Morning (before 7:30 AM)</option>
+              <option>Morning (7:30 – 9 AM)</option>
+              <option>Afternoon (12 – 2 PM)</option>
+              <option>Evening (4 – 6 PM)</option>
+              <option>Evening (after 6 PM)</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>How long have you used this route?</label>
+            <select id="busUsage">
+              <option value="">— select —</option>
+              <option>Less than 1 month</option>
+              <option>1 – 3 months</option>
+              <option>3 – 6 months</option>
+              <option>6 months – 1 year</option>
+              <option>More than 1 year</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="sub-title"><i class="ti ti-star"></i> Rate your experience</div>
+
+        <div class="rating-grid">
+          <div class="mini-card">
+            <label>Punctuality</label>
+            <div class="star-row" data-key="punctuality">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-punctuality">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Cleanliness</label>
+            <div class="star-row" data-key="cleanliness_bus">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-cleanliness_bus">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Driver behaviour</label>
+            <div class="star-row" data-key="driver">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-driver">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Comfort &amp; seating</label>
+            <div class="star-row" data-key="comfort">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-comfort">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Safety &amp; security</label>
+            <div class="star-row" data-key="safety">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-safety">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Overall satisfaction</label>
+            <div class="star-row" data-key="bus_overall">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-bus_overall">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label>Issues faced <span class="opt">(select all that apply)</span></label>
+          <div class="tag-row">
+            <button type="button" class="tag" onclick="toggleTag(this)">Overcrowding</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Late arrivals</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Rough driving</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">AC / heating issue</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Route change without notice</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Breakdown / delay</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Rude staff</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Insufficient buses</button>
+            <button type="button" class="tag" onclick="toggleTag(this, true)">No issues ✓</button>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field" style="margin-bottom:0">
+            <label>Would you recommend KLU Hyderabad bus service?</label>
+            <select id="busRecommend">
+              <option value="">— select —</option>
+              <option>Yes, definitely</option>
+              <option>Yes, with some improvements</option>
+              <option>Not sure</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>How do you travel on off-days?</label>
+            <select id="altTravel">
+              <option value="">— select —</option>
+              <option>Auto / cab</option>
+              <option>Personal vehicle</option>
+              <option>Metro + auto</option>
+              <option>Hostel resident</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label>Comments &amp; suggestions <span class="opt">(optional)</span></label>
+          <textarea id="busComments" placeholder="Share your experience or suggest improvements for KLU Hyderabad bus service…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ CANTEEN SECTION ══════════ -->
+    <div id="section-canteen" style="display:none">
+      <div class="section-card">
+        <div class="card-head">
+          <div class="card-icon"><i class="ti ti-tools-kitchen-2"></i></div>
+          <div class="card-head-text">
+            <h2>KLU Hyderabad — Canteen &amp; Food Court</h2>
+            <p>Rate the food and dining facilities on campus</p>
+          </div>
+        </div>
+
+        <div class="two-col" style="margin-bottom:1.25rem">
+          <div class="field" style="margin-bottom:0">
+            <label>Canteen</label>
+            <input type="text" id="canteenName" value="KLU Hyderabad Main Canteen" readonly
+              style="background:#f0f0f0; color:var(--text-secondary); cursor:default;" />
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>Usual visit time</label>
+            <select id="canteenTime">
+              <option value="">— select —</option>
+              <option>Breakfast (7 – 9 AM)</option>
+              <option>Mid-morning snack (9 – 11 AM)</option>
+              <option>Lunch (12 – 2 PM)</option>
+              <option>Evening snack (4 – 6 PM)</option>
+              <option>Dinner (7 – 9 PM)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>How often do you use the canteen?</label>
+          <select id="canteenFreq">
+            <option value="">— select —</option>
+            <option>Every day</option>
+            <option>4–5 times a week</option>
+            <option>2–3 times a week</option>
+            <option>Once a week</option>
+            <option>Occasionally</option>
+          </select>
+        </div>
+
+        <div class="divider"></div>
+        <div class="sub-title"><i class="ti ti-star"></i> Rate your experience</div>
+
+        <div class="rating-grid">
+          <div class="mini-card">
+            <label>Food quality &amp; taste</label>
+            <div class="star-row" data-key="food">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-food">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Hygiene &amp; cleanliness</label>
+            <div class="star-row" data-key="hygiene">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-hygiene">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Value for money</label>
+            <div class="star-row" data-key="value">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-value">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Staff behaviour</label>
+            <div class="star-row" data-key="staff">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-staff">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Menu variety</label>
+            <div class="star-row" data-key="variety">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-variety">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Waiting time</label>
+            <div class="star-row" data-key="wait">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-wait">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label>What would you like improved? <span class="opt">(select all that apply)</span></label>
+          <div class="tag-row">
+            <button type="button" class="tag" onclick="toggleTag(this)">More Hyderabadi dishes</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">More veg options</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Healthier meals</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Faster service</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Longer opening hours</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Lower prices</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Better hygiene</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">More seating</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">UPI / digital payment</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Online pre-order</button>
+            <button type="button" class="tag" onclick="toggleTag(this, true)">Satisfied ✓</button>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field" style="margin-bottom:0">
+            <label>Favourite item at this canteen <span class="opt">(optional)</span></label>
+            <input type="text" id="favItem" placeholder="e.g. Hyderabadi biryani, Dosa…" />
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>Avg. spend per visit (₹)</label>
+            <select id="canteenSpend">
+              <option value="">— select —</option>
+              <option>Under ₹50</option>
+              <option>₹50 – ₹100</option>
+              <option>₹100 – ₹150</option>
+              <option>₹150 – ₹200</option>
+              <option>Above ₹200</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label>Comments &amp; suggestions <span class="opt">(optional)</span></label>
+          <textarea id="canteenComments" placeholder="What would you like improved, or what do you enjoy most at KLU Hyderabad canteen?"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ HOSTEL SECTION ══════════ -->
+    <div id="section-hostel" style="display:none">
+      <div class="section-card">
+        <div class="card-head">
+          <div class="card-icon" style="background:#f0f4ff">
+            <i class="ti ti-building" style="color:#3b5bdb"></i>
+          </div>
+          <div class="card-head-text">
+            <h2>KLU Hyderabad — Hostel</h2>
+            <p>Rate your hostel accommodation and facilities</p>
+          </div>
+        </div>
+
+        <div class="two-col" style="margin-bottom:1.25rem">
+          <div class="field" style="margin-bottom:0">
+            <label>Hostel block</label>
+            <select id="hostelBlock">
+              <option value="">— select —</option>
+              <option>Boys hostel – Block A</option>
+              <option>Boys hostel – Block B</option>
+              <option>Boys hostel – Block C</option>
+              <option>Girls hostel – Block A</option>
+              <option>Girls hostel – Block B</option>
+              <option>Other / Not sure</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>Room type</label>
+            <select id="hostelRoom">
+              <option value="">— select —</option>
+              <option>Single occupancy</option>
+              <option>Double sharing</option>
+              <option>Triple sharing</option>
+              <option>Four sharing</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>How long have you been staying?</label>
+          <select id="hostelDuration">
+            <option value="">— select —</option>
+            <option>Less than 1 month</option>
+            <option>1 – 3 months</option>
+            <option>3 – 6 months</option>
+            <option>6 months – 1 year</option>
+            <option>More than 1 year</option>
+          </select>
+        </div>
+
+        <div class="divider"></div>
+        <div class="sub-title"><i class="ti ti-star"></i> Rate your experience</div>
+
+        <div class="rating-grid">
+          <div class="mini-card">
+            <label>Room cleanliness</label>
+            <div class="star-row" data-key="hostel_clean">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-hostel_clean">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Washroom hygiene</label>
+            <div class="star-row" data-key="hostel_washroom">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-hostel_washroom">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Wi-Fi connectivity</label>
+            <div class="star-row" data-key="hostel_wifi">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-hostel_wifi">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Water &amp; power supply</label>
+            <div class="star-row" data-key="hostel_utilities">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-hostel_utilities">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Warden / staff behaviour</label>
+            <div class="star-row" data-key="hostel_warden">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-hostel_warden">—</span>
+            </div>
+          </div>
+          <div class="mini-card">
+            <label>Overall satisfaction</label>
+            <div class="star-row" data-key="hostel_overall">
+              <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star" data-val="5">★</span>
+              <span class="star-label" id="lbl-hostel_overall">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label>Issues faced <span class="opt">(select all that apply)</span></label>
+          <div class="tag-row">
+            <button type="button" class="tag" onclick="toggleTag(this)">Dirty rooms</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Water shortage</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Power cuts</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Poor Wi-Fi</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Maintenance ignored</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Noisy environment</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Security concerns</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Insufficient common areas</button>
+            <button type="button" class="tag" onclick="toggleTag(this)">Overcrowding</button>
+            <button type="button" class="tag" onclick="toggleTag(this, true)">No issues ✓</button>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field" style="margin-bottom:0">
+            <label>Would you recommend the KLU hostel?</label>
+            <select id="hostelRecommend">
+              <option value="">— select —</option>
+              <option>Yes, definitely</option>
+              <option>Yes, with some improvements</option>
+              <option>Not sure</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>Mess / food quality in hostel</label>
+            <select id="hostelMess">
+              <option value="">— select —</option>
+              <option>Excellent</option>
+              <option>Good</option>
+              <option>Average</option>
+              <option>Poor</option>
+              <option>Very poor</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label>Comments &amp; suggestions <span class="opt">(optional)</span></label>
+          <textarea id="hostelComments" placeholder="Share your experience or suggest improvements for KLU Hyderabad hostel…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ STUDENT DETAILS ══════════ -->
+    <div class="section-card dashed">
+      <div class="card-head" style="margin-bottom:1rem; padding-bottom:.85rem">
+        <div class="card-icon" style="background:#f0f8ff">
+          <i class="ti ti-user" style="color:#185fa5"></i>
+        </div>
+        <div class="card-head-text">
+          <h2>Your details</h2>
+          <p>Optional — used only if we need to follow up on your feedback</p>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="field" style="margin-bottom:0">
+          <label>Full name</label>
+          <input type="text" id="studentName" placeholder="Your name" />
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>KL Hyderabad ID / Roll no.</label>
+          <input type="text" id="studentId" placeholder="e.g. 21331A0001" />
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Department</label>
+          <select id="studentDept">
+            <option value="">— select —</option>
+            <option>CSE</option>
+            <option>CSE (AI &amp; ML)</option>
+            <option>CSE (Data Science)</option>
+            <option>CSE (Cyber Security)</option>
+            <option>ECE</option>
+            <option>EEE</option>
+            <option>Mechanical Engineering</option>
+            <option>Civil Engineering</option>
+            <option>IT</option>
+            <option>MBA</option>
+            <option>MCA</option>
+            <option>B.Sc / M.Sc</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Year of study</label>
+          <select id="studentYear">
+            <option value="">— select —</option>
+            <option>1st year</option>
+            <option>2nd year</option>
+            <option>3rd year</option>
+            <option>4th year</option>
+            <option>PG / MBA 1st year</option>
+            <option>PG / MBA 2nd year</option>
+            <option>PhD</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Accommodation</label>
+          <select id="studentAccom">
+            <option value="">— select —</option>
+            <option>KLU Hyderabad hostel</option>
+            <option>Private hostel / PG</option>
+            <option>Day scholar (commuting)</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Mobile number <span class="opt">(optional)</span></label>
+          <input type="text" id="studentPhone" placeholder="For follow-up only" />
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-row">
+      <button type="submit" class="btn-submit">
+        <i class="ti ti-send"></i> Submit review
+      </button>
+      <button type="button" class="btn-reset" onclick="resetForm()">
+        Clear form
+      </button>
+    </div>
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="success-box" id="successBox">
+    <div class="success-icon">
+      <i class="ti ti-circle-check"></i>
+    </div>
+    <h3>Thank you for your feedback!</h3>
+    <p>Your review has been submitted to the KLU Hyderabad Student Welfare Cell.</p>
+    <p>We typically act on feedback within <strong>7 working days</strong>.</p>
+    <div class="klu-tag">KL University Hyderabad — Bachupally</div>
+    <br/>
+    <button class="btn-new" onclick="resetForm()">Submit another review</button>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <strong>KL University Hyderabad</strong> &nbsp;·&nbsp; Bachupally, Hyderabad – 500090, Telangana<br/>
+    Student Welfare Cell &nbsp;·&nbsp; <a href="#">studentwelfare.hyd@kluniversity.in</a> &nbsp;·&nbsp; © 2024–25 KL University
+  </div>
+</div>
+</div><!-- /#mainApp -->
+
+<script>
+  // ── LOGIN LOGIC ──
+  function doLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass  = document.getElementById('loginPassword').value;
+    const emailEl = document.getElementById('loginEmail');
+    const passEl  = document.getElementById('loginPassword');
+
+    // Validate @klh.edu.in domain
+    if (!email.toLowerCase().endsWith('@klh.edu.in')) {
+      showLoginError('Please use your official <strong>@klh.edu.in</strong> college email.');
+      emailEl.classList.add('error');
+      return;
+    }
+    if (!pass) {
+      showLoginError('Please enter your password.');
+      passEl.classList.add('error');
+      return;
+    }
+
+    // Store session and show main app
+    sessionStorage.setItem('klh_user', email);
+    document.getElementById('topbarEmail').textContent = email;
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+  }
+
+  function doLogout() {
+    sessionStorage.removeItem('klh_user');
+    document.getElementById('loginPage').style.display = 'flex';
+    document.getElementById('mainApp').style.display = 'none';
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+    clearLoginError();
+  }
+
+  function showLoginError(msg) {
+    const el = document.getElementById('loginError');
+    document.getElementById('loginErrorMsg').innerHTML = msg;
+    el.classList.add('show');
+  }
+
+  function clearLoginError() {
+    document.getElementById('loginError').classList.remove('show');
+    document.getElementById('loginEmail').classList.remove('error');
+    document.getElementById('loginPassword').classList.remove('error');
+  }
+
+  // Auto-restore session if already logged in
+  (function() {
+    const saved = sessionStorage.getItem('klh_user');
+    if (saved) {
+      document.getElementById('topbarEmail').textContent = saved;
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+    }
+  })();
+
+  const ratings = {};
+  const starLabels = ['', 'Poor', 'Fair', 'Good', 'Very good', 'Excellent'];
+
+  function switchTab(tab) {
+    const labels = ['bus','canteen','hostel','both'];
+    document.querySelectorAll('.tab').forEach((t,i) =>
+      t.classList.toggle('active', labels[i] === tab));
+    document.querySelectorAll('.prog-step').forEach((s,i) =>
+      s.classList.toggle('active', labels[i] === tab));
+    document.getElementById('section-bus').style.display =
+      (tab==='bus'||tab==='both') ? '' : 'none';
+    document.getElementById('section-canteen').style.display =
+      (tab==='canteen'||tab==='both') ? '' : 'none';
+    document.getElementById('section-hostel').style.display =
+      (tab==='hostel'||tab==='both') ? '' : 'none';
+  }
+
+  document.querySelectorAll('.star-row').forEach(row => {
+    const key = row.dataset.key;
+    const stars = row.querySelectorAll('.star');
+    const lbl = document.getElementById('lbl-' + key);
+    function update(val, perm) {
+      stars.forEach(s => s.classList.toggle('lit', parseInt(s.dataset.val) <= val));
+      if (lbl) lbl.textContent = val ? starLabels[val] : '—';
+      if (perm) ratings[key] = val;
+    }
+    stars.forEach(star => {
+      star.addEventListener('click', () => update(parseInt(star.dataset.val), true));
+      star.addEventListener('mouseover', () => update(parseInt(star.dataset.val), false));
+      star.addEventListener('mouseout', () => update(ratings[key]||0, false));
+    });
+  });
+
+  function toggleTag(el, exclusive) {
+    const row = el.closest('.tag-row');
+    if (exclusive) {
+      row.querySelectorAll('.tag').forEach(t => { t.classList.remove('selected'); delete t.dataset.exclusive; });
+      el.classList.add('selected');
+      el.dataset.exclusive = 'true';
+    } else {
+      row.querySelectorAll('.tag[data-exclusive]').forEach(t => { t.classList.remove('selected'); delete t.dataset.exclusive; });
+      el.classList.toggle('selected');
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('reviewForm').style.display = 'none';
+    document.getElementById('successBox').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetForm() {
+    document.getElementById('reviewForm').reset();
+    Object.keys(ratings).forEach(k => delete ratings[k]);
+    document.querySelectorAll('.star').forEach(s => s.classList.remove('lit'));
+    document.querySelectorAll('.star-label').forEach(l => l.textContent = '—');
+    document.querySelectorAll('.tag').forEach(t => { t.classList.remove('selected'); delete t.dataset.exclusive; });
+    document.getElementById('successBox').classList.remove('show');
+    document.getElementById('reviewForm').style.display = '';
+    switchTab('bus');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
